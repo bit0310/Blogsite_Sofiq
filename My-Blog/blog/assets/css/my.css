@@ -1,0 +1,11 @@
+
+.carousel-item h3{
+    color: red;
+    text-align: center;
+}
+
+.carousel-item-padding{
+    margin: 0 auto;
+    color: black;
+    padding: 0px;
+}
