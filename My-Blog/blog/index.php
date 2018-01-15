@@ -5,7 +5,7 @@ require_once 'vendor/autoload.php';
 $login = new App\classes\Login();
 
 
-$getAllPostImage = $login->getAllImage();
+$viewAllPublishedPost = $login->getAllPublishedPost();
 
 ?>
 
@@ -24,6 +24,7 @@ $getAllPostImage = $login->getAllImage();
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="assets/css/heroic-features.css" rel="stylesheet">
@@ -70,6 +71,7 @@ $getAllPostImage = $login->getAllImage();
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
         <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
     </header>
+
     <section class="add-section mt-0 mb-4">
         <div class="container">
             <div class="row">
@@ -90,22 +92,24 @@ $getAllPostImage = $login->getAllImage();
             </div>
         </div>
     </section>
-</div>
+
     <!-- Page Features -->
     <div class="container">'
         <div class="row text-center">
             <div class="col-md-12">
 
 
-        <?php while ($getAllPostInfo = mysqli_fetch_assoc($getAllPostImage)) { ?>
+        <?php while ($viewAllPost = mysqli_fetch_assoc($viewAllPublishedPost)) { ?>
 
         <div class="col-lg-3 col-md-6 mb-4 float-left">
 
             <div class="card">
-                <img class="card-img-top" src="<?php echo $getAllPostInfo['blog_image']; ?>"   style="height: 150px; width: auto; ">
+                <img class="card-img-top" src="app/<?php echo $viewAllPost['blog_image']; ?>"
+                     style="height: 150px; width: auto; ">
                 <div class="card-body">
-                    <h4 class="card-title"><?php echo $getAllPostInfo['category_id']; ?></h4>
-                    <p class="card-text"><?php echo $getAllPostInfo['blog_title']; ?> </p>
+                    <h1 class="card-title"><?php echo $viewAllPost['category_id']; ?></h1>
+                    <h5 class="card-text"><?php echo $viewAllPost['blog_title']; ?> </h5>
+                    <p class="card-text"><?php echo $viewAllPost['short_description']; ?> </p>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="btn btn-primary">Find Out More!</a>
@@ -119,79 +123,7 @@ $getAllPostImage = $login->getAllImage();
             </div>
         </div>
     </div>
-
-
-<!--        <div class="col-lg-3 col-md-6 mb-4">-->
-<!--            <div class="card">-->
-<!--                <img class="card-img-top" src="admin/../assets/images/football.jpg" alt="" style="height: 160px;">-->
-<!--                <div class="card-body">-->
-<!--                    <h4 class="card-title">Sports</h4>-->
-<!--                    <p class="card-text">Football.</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-3 col-md-6 mb-4">-->
-<!--            <div class="card">-->
-<!--                <img class="card-img-top" src="admin/../assets/images/badminton.jpg" alt="" style="height: 160px;">-->
-<!--                <div class="card-body">-->
-<!--                    <h4 class="card-title">Sports</h4>-->
-<!--                    <p class="card-text">Badminton.</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-3 col-md-6 mb-4">-->
-<!--            <div class="card">-->
-<!--                <img class="card-img-top" src="admin/../assets/images/f.png" alt="" style="height: 160px;">-->
-<!--                <div class="card-body">-->
-<!--                    <h4 class="card-title">Website</h4>-->
-<!--                    <p class="card-text">Facebook.</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--    </div>-->
-    <!-- /.row -->
-<!--    <div class="row text-center">-->
-<!---->
-<!--    <div class="col-lg-3 col-md-6 mb-4">-->
-<!--        <div class="card">-->
-<!--            <img class="card-img-top" src="admin/../assets/images/l.png" alt="" style="height: 160px;">-->
-<!--            <div class="card-body">-->
-<!--                <h4 class="card-title">Website</h4>-->
-<!--                <p class="card-text">LinkedIn. </p>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--                <a href="#" class="btn btn-primary">Find Out More!</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!--    <div class="col-lg-3 col-md-6 mb-4">-->
-<!--        <div class="card">-->
-<!--            <img class="card-img-top" src="admin/../assets/images/php.jpg" alt="" style="height: 160px;">-->
-<!--            <div class="card-body">-->
-<!--                <h4 class="card-title">Programming Language</h4>-->
-<!--                <p class="card-text">PHP.</p>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--                <a href="#" class="btn btn-primary">Find Out More!</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!---->
-<!--</div>-->
+</div>
 
 
 
@@ -201,13 +133,79 @@ $getAllPostImage = $login->getAllImage();
 <!-- /.container -->
 
 <!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; S.M. Sofiqul Islam</p>
-    </div>
-    <!-- /.container -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row ">
+
+                <div class="bottom-left col-md-3">
+
+                    <div class="footer_menu">
+                        <h4 style="color: white">Website</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bottom-left col-md-3">
+                    <div class="footer_menu">
+                        <h4 style="color: white">About Us</h4>
+                        <ul>
+                            <li><a href="#">Company Information</a></li>
+                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">Reviews</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bottom-left col-md-3">
+                    <div class="footer_menu">
+                        <h4 style="color: white">Support</h4>
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Help desk</a></li>
+                            <li><a href="#">Forums</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bottom-left col-md-3">
+                    <div class="footer_menu">
+                        <h4 style="color: white">Legal</h4>
+                        <ul>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Terms of Use</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="bottom-center col-md-6 text-center m-auto">
+                    <div class="footer-social" style="color: white; font-size: 30px;">
+                        <a href="https://www.facebook.com/smsofiqul.islam" target="_blank"><i class="fa fa-facebook" style="color: white" aria-hidden="true"></i></a>
+                        <a href="https://twitter.com/sofiqul_310" target="_blank"><i class="fa fa-twitter" style="color: white" aria-hidden="true"></i></a>
+                        <a href="https://www.google.com" target="_blank"><i class="fa fa-google" style="color: white" aria-hidden="true"></i></a>
+                        <a href="https://www.linkedin.com/in/smsofiqul-islam-310/" target="_blank"><i class="fa fa-linkedin" style="color: white" aria-hidden="true"></i></a>
+                        <a href="https://www.behance.net/smsofiqul_islam" target="_blank"><i class="fa fa-behance" style="color: white" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+</div>
 </footer>
 
+<section class="lower-footer ">
+    <div class="container">
+        <div class="row">
+            <div class="bottom col-md-6 m-auto text-center">
+                <div>&copy; 2017 All Rights Reserved to S.M. Sofiqul Islam</div>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- Bootstrap core JavaScript -->
 <script src="assets/js/jquery-3.2.1.js"></script>
 <script src="assets/js/Proper.js"></script>

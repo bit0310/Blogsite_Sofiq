@@ -41,7 +41,7 @@ if (isset($_POST['btn'])){
 
 <div class="container" style="margin-top: 20px;">
     <div class="row">
-        <div class="col-sm-8 mx-auto">
+        <div class="col-sm-10 mx-auto">
             <div class="card">
                 <div class="card-body">
                     <form action="" method="POST" enctype="multipart/form-data">
@@ -65,13 +65,13 @@ if (isset($_POST['btn'])){
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-3 col-form-label">Short Description</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="short_description"></textarea>
+                                <textarea class="form-control " name="short_description"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-3 col-form-label">Long Description</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="long_description"></textarea>
+                                <textarea class="form-control textarea" rows="10" name="long_description"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -106,6 +106,8 @@ if (isset($_POST['btn'])){
 
 <script src="../assets/js/jquery-3.2.1.js"></script>
 <script src="../assets/js/bootstrap.bundle.js"></script>
+<script src="../assets/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'.textarea' });</script>
 <script src="../assets/js/bootstrap.min.js"></script>
 </body>
 </html>

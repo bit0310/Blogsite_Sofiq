@@ -143,7 +143,7 @@ status= '$data[status]' WHERE id= '$data[id]'";
 
 
         public function viewAllblogInfo(){
-            $sql= "select * from blogs";
+            $sql= "select b.*, c.category_name FROM blogs as b, categories as c  WHERE b.category_id = c.id";
 
             if(mysqli_query(Database::dbConnection(), $sql)){
                 $queryResult = (mysqli_query(Database::dbConnection(), $sql));
@@ -152,6 +152,8 @@ status= '$data[status]' WHERE id= '$data[id]'";
                 die('QUERY PROBLEM'.mysqli_error(Database::dbConnection()));
             }
         }
+
+
 
 
 
@@ -168,38 +170,54 @@ status= '$data[status]' WHERE id= '$data[id]'";
 
         public function updateBlogInfo($data){
 
-            $fileName = $_FILES['blog_image']['name'];
-            $directory = '../assets/images/';
-            $imageUrl = $directory.$fileName;
-            $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
-            $check = getimagesize($_FILES['blog_image']['tmp_name']);
-            if($check) {
-                if(file_exists($imageUrl)) {
-                    die('This image already exist. Please select another one. Thanks');
-                } else {
-                    if($_FILES['blog_image']['size'] > 500000) {
-                        die('Your image size is too large. please select with in 10kb');
+            $blogImage = $_FILES['blog_image']['name'];
+            if($blogImage) {
+//...............................detele replace image..........................
+                $sql = "SELECT * FROM blogs WHERE id = '$data[blog_id]' ";
+                $queryResult = mysqli_query(Database::dbConnection(), $sql);
+                $blogInfo = mysqli_fetch_assoc($queryResult);
+                unlink($blogInfo['blog_image']);
+
+                $fileName = $_FILES['blog_image']['name'];
+                $directory = '../assets/images/';
+                $imageUrl = $directory.$fileName;
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $check = getimagesize($_FILES['blog_image']['tmp_name']);
+                if($check) {
+                    if(file_exists($imageUrl)) {
+                        die('This image already exist. Please select another one. Thanks');
                     } else {
-                        if($fileType != 'JPG' && $fileType != 'png' && $fileType != 'jpg') {
-                            die('Image type is not supported. Please use jpg or png');
+                        if($_FILES['blog_image']['size'] > 500000) {
+                            die('Your image size is too large. please select with in 10kb');
                         } else {
-                            move_uploaded_file($_FILES['blog_image']['tmp_name'], $imageUrl);
+                            if($fileType != 'JPG' && $fileType != 'png' && $fileType != 'jpg') {
+                                die('Image type is not supported. Please use jpg or png');
+                            } else {
+                                move_uploaded_file($_FILES['blog_image']['tmp_name'], $imageUrl);
+                                $sql="UPDATE blogs SET category_id = '$data[category_id]', blog_title = '$data[blog_title]', short_description = '$data[short_description]', long_description = '$data[long_description]', blog_image = '$imageUrl', status = '$data[status]' WHERE id = '$data[blog_id]' ";
+                                if(mysqli_query(Database::dbConnection(),$sql)){
+                                    header('Location: manage-blog.php');
+                                } else{
+                                    die("Query problem".mysqli_error(Database::dbConnection()));
+                                }
 
-                            $sql = "UPDATE blogs SET category_id = '$data[category_id]', blog_title = '$data[blog_title]', 
-              short_description = '$data[short_description]', long_description = '$data[long_description]', blog_image = '$imageUrl', 
-              status = '$data[status]' WHERE id= '$data[id]'";
-
-                            if(mysqli_query(Database::dbConnection(), $sql)){
-                                header('Location: manage-blog.php');
-                            }else{
-                                die('QUERY PROBLEM'.mysqli_error(Database::dbConnection()));
                             }
                         }
                     }
+                } else {
+                    die('Please chose a image file thanks !.');
                 }
+
+
             } else {
-                die('Please chose a image file thanks !.');
+                $sql="UPDATE blogs SET category_id = '$data[category_id]', blog_title = '$data[blog_title]', short_description = '$data[short_description]', long_description = '$data[long_description]', status = '$data[status]' WHERE id = '$data[blog_id]' ";
+                if(mysqli_query(Database::dbConnection(),$sql)){
+                    header('Location: manage-blog.php');
+                } else{
+                    die("Query problem".mysqli_error(Database::dbConnection()));
+                }
             }
+
 
         }
 
@@ -227,7 +245,7 @@ status= '$data[status]' WHERE id= '$data[id]'";
 
 
 
-    public function getAllImage(){
+    public function getAllPublishedPost(){
         $sql = "SELECT  * FROM blogs WHERE status=1";
         if(mysqli_query(Database::dbConnection(), $sql)){
             $queryResult = (mysqli_query(Database::dbConnection(), $sql));

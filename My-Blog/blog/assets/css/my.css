@@ -9,3 +9,60 @@
     color: black;
     padding: 0px;
 }
+
+
+
+.footer{
+    height:auto;
+    font-size: 20px;
+    color: white;
+    padding: 0px;
+    background-color: #062c38;
+    margin: 0;
+}
+
+.footer_menu h4{
+    color: white;
+    font-weight: lighter;
+    margin-top: 10px;
+    text-align: center;
+    background-color: #062c20;
+}
+
+.footer_menu ul{
+    list-style: none;
+    text-align: left;
+    background-color: #062C4C;
+
+
+
+}
+.footer_menu ul li a{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+
+
+}
+
+.footer_menu ul li a:hover{
+    color:green;
+
+
+}
+.footer-social i{
+    margin: 0;
+}
+.footer-social a i{
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+}
+.footer-social a i:hover{
+
+    background-color: black;
+    color: red;
+
+}

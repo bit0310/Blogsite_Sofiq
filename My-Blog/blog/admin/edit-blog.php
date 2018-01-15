@@ -39,15 +39,15 @@ $getCategoryId = $login->getAllPublishedCategoryInfo();
 
 <div class="container" style="margin-top: 20px;">
     <div class="row">
-        <div class="col-sm-8 mx-auto">
+        <div class="col-sm-10 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST" name="editBlogForm" enctype="multipart/form-data">
 
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">Category Name</label>
                             <div class="col-sm-9">
-                                <input type="hidden" name="id" class="form-control" value="<?php echo $blog['id'];  ?>" />
+                                <input type="hidden" name="blog_id" class="form-control" value="<?php echo $blog['id'];  ?>" />
                                 <select name="category_id" class="form-control">
                                     <option>---Select Category Name---</option>
                                     <?php while($category = mysqli_fetch_assoc($getCategoryId)) { ;?>
@@ -73,13 +73,14 @@ $getCategoryId = $login->getAllPublishedCategoryInfo();
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-3 col-form-label">Long Description</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="long_description"><?php echo $blog['long_description']; ?></textarea>
+                                <textarea class="form-control textarea" rows="10" name="long_description"><?php echo $blog['long_description']; ?></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-3 col-form-label">Blog Image</label>
                             <div class="col-sm-9">
                                 <input type="file" name="blog_image" accept="image/*" />
+                                <img src="<?php echo $blog['blog_image'] ;  ?>" height="100" width="150" alt="">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -109,6 +110,11 @@ $getCategoryId = $login->getAllPublishedCategoryInfo();
 
 <script src="../assets/js/jquery-3.2.1.js"></script>
 <script src="../assets/js/bootstrap.bundle.js"></script>
+<script src="../assets/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'.textarea' });</script>
 <script src="../assets/js/bootstrap.min.js"></script>
+<script>
+    document.forms['editBlogForm'].elements['category_id'].value= '<?php echo $blog['category_id']; ?>';
+</script>
 </body>
 </html>
