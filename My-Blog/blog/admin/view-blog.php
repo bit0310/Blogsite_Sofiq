@@ -19,15 +19,15 @@ if(isset($_GET['delete'])){
     $message = $login->deleteBlog($id);
 }
 
+
+
 $id = $_GET['id'];
-$queryResult =  $login->getBlogInfoById($id);
-$blogDetails = mysqli_fetch_assoc($queryResult);
-
-
-//$category =  $login->viewAllblogInfo();
-//$categoryName = mysqli_fetch_assoc($category);
-
-
+$queryResult =  $login->viewAllblogInfo();
+while ($allBlogDetails = mysqli_fetch_assoc($queryResult)){
+    if($allBlogDetails['id']==$id){
+        $blogDetails = $allBlogDetails;
+    }
+}
 
 
 
@@ -63,8 +63,8 @@ $blogDetails = mysqli_fetch_assoc($queryResult);
                         </tr>
 
                         <tr>
-                            <th>Category Id</th>
-                            <td><?php echo $blogDetails['category_id']; ?></td>
+                            <th>Category Name</th>
+                            <td><?php echo $blogDetails['category_name']; ?></td>
                         </tr>
 
                         <tr>

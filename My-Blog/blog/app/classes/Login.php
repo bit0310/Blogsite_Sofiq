@@ -145,6 +145,7 @@ status= '$data[status]' WHERE id= '$data[id]'";
         public function viewAllblogInfo(){
             $sql= "select b.*, c.category_name FROM blogs as b, categories as c  WHERE b.category_id = c.id";
 
+
             if(mysqli_query(Database::dbConnection(), $sql)){
                 $queryResult = (mysqli_query(Database::dbConnection(), $sql));
                 return $queryResult;
@@ -246,7 +247,7 @@ status= '$data[status]' WHERE id= '$data[id]'";
 
 
     public function getAllPublishedPost(){
-        $sql = "SELECT  * FROM blogs WHERE status=1";
+        $sql = "SELECT b.*, c.category_name FROM blogs as b, categories as c  WHERE (b.category_id = c.id) AND (b.status=1)";
         if(mysqli_query(Database::dbConnection(), $sql)){
             $queryResult = (mysqli_query(Database::dbConnection(), $sql));
             return $queryResult;
@@ -260,6 +261,33 @@ status= '$data[status]' WHERE id= '$data[id]'";
 
 
 
+//--------------------------------------------------------Comment panel----------------------------------
+
+
+    public function addComment($data){
+
+        $sql= "INSERT INTO comments (blog_id, comment_description, status) VALUES ('$data[blog_id]', '$data[comment_description]', '$data[status]')";
+
+        if(mysqli_query(Database::dbConnection(), $sql)){
+            $message = "Add Comment successfully";
+            return $message;
+        }else{
+            die('QUERY PROBLEM'.mysqli_error(Database::dbConnection()));
+        }
+    }
+
+
+    public function viewAllComment($id){
+
+        $sql= "select * from comments WHERE  blog_id = '$id' ";
+
+        if(mysqli_query(Database::dbConnection(), $sql)){
+            $queryResult = (mysqli_query(Database::dbConnection(), $sql));
+            return $queryResult;
+        }else{
+            die('QUERY PROBLEM'.mysqli_error(Database::dbConnection()));
+        }
+    }
 
 
 
